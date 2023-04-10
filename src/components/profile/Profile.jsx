@@ -96,7 +96,7 @@ const navigate = useNavigate();
                     console.log(e);
                   });
           }} >
-        Delete my Account</Button>
+              Delete my Account</Button>
         </Flex>
       </Box>
     </Box>

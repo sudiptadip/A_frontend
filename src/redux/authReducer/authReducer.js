@@ -3,6 +3,7 @@ import {
   CREATE_ACCOUNT_REQUEST,
   CREATE_ACCOUNT_SUCCESS,
   LOGOUT,
+  UPDATE,
 } from "./actionType";
 
 const initialData = {
@@ -18,13 +19,11 @@ const authReducer = (state = initialData, action) => {
       return {
         ...state,
         isLoading: true,
-      };
+      }
     case CREATE_ACCOUNT_SUCCESS:
-      localStorage.setItem("user", JSON.stringify(payload));
       return {
         ...state,
         isLoading: false,
-        isUser: true,
         user: payload,
       };
     case CREATE_ACCOUNT_FAILURE:
@@ -40,6 +39,10 @@ const authReducer = (state = initialData, action) => {
         isLoading: false,
         isUser: false,
       };
+    case UPDATE: return {
+      ...state,
+      user: payload
+    }
     default:
       return state;
   }

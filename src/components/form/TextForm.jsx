@@ -17,41 +17,80 @@ import {
   TabList,
   Tabs,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { RxText } from "react-icons/rx";
+import { useDispatch, useSelector } from "react-redux";
+import { addPost, postUpdate } from "../../redux/appReducer/action";
 
-const TextForm = () => {
+const TextForm = ({ type = "addpost", props }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const [background,setBackground] = useState('')
+  const [title, setTitle] = useState(type === "editPost" ? props.title : "");
+  const [content, setContent] = useState(type === "editPost" ? props.content : "");
+  const [background,setBackground] = useState(type === "editPost" ? props.template : 'one')
+  const dispatch = useDispatch()
+  const {user} = useSelector((e) => e.authReducer)
+  const toast = useToast()
 
   function AddPost(){
-    console.log({title,content,background})
+    if(title && content && background){
+      dispatch(addPost({
+        title: title,
+        content: content,
+        user_id: user._id,  
+        name: user.name,
+        imgUrl: '',
+        avtarUrl: user.url,
+        type: 'text',
+        template: background,
+        likes: [],
+      },toast))
+      onClose()
+    }else{
+      alert('Fill out all input')
+    }
+  }
+
+  function UpdatePost(){
+    if (title && content) {
+      dispatch(
+        postUpdate(
+          {
+            title: title,
+            content: content,
+            template: background,
+          },props.id
+        )
+      );
+      onClose();
+    } else {
+      alert("Fill out all input");
+    }
   }
 
   return (
     <>
       <Flex onClick={onOpen} gap={"10px"} alignItems={"center"}>
-        <RxText />
-        What's on your mind
+        {type === "editPost" ? "Edit post" : <RxText /> + " What's on your mind"}
       </Flex>
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>What's on your mind</ModalHeader>
+          <ModalHeader>{type === "editPost" ? "Edit post" : "What's on your mind"}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <FormControl>
               <FormLabel>Title</FormLabel>
-              <Input onChange={(e) => setTitle(e.target.value)} type="text" placeholder="1 - 50 characters" />
+              <Input value={title} onChange={(e) => setTitle(e.target.value)} type="text" placeholder="1 - 50 characters" />
 
               <FormLabel mt={"20px"}>Content</FormLabel>
-              <Input onChange={(e) => setContent(e.target.value)} placeholder="1 - 300 characters" height={"100px"} type="text" />
+              <Input value={content} onChange={(e) => setContent(e.target.value)} placeholder="1 - 300 characters" height={"100px"} type="text" />
 
-              <FormLabel mt={"20px"}>Select Template</FormLabel>
+{ type !== "editPost" ?
+           <>
+             <FormLabel mt={"20px"}>Select Template</FormLabel>
               <Grid templateColumns='repeat(1, 1fr)' gap={6} w='100%' h={'150px'} >
                 <Tabs variant="soft-rounded" colorScheme="green">
                   <TabList onClick={(e) => setBackground(e.target.value)} >
@@ -68,13 +107,16 @@ const TextForm = () => {
                     <Box borderRadius={'10px'} w={'80px'} h={'80px'} border={'1px solid black'} backgroundImage="url('https://png.pngtree.com/thumb_back/fh260/background/20211112/pngtree-aesthetic-background-instagram-feed-post-image_915816.png')" backgroundSize="cover" ></Box>
                 </Flex>
               </Grid>
+              </>
+              : <></>
+              }
             </FormControl>
           </ModalBody>
           <ModalFooter>
             <Button variant="ghost" colorScheme="blue" mr={3} onClick={onClose}>
               Close
             </Button>
-            <Button onClick={AddPost} colorScheme="twitter">Add Posst</Button>
+            <Button onClick={type === "editPost" ? UpdatePost : AddPost} colorScheme="twitter">{type === "editPost" ? "Update Post" : "Add Posst"}</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

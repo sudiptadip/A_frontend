@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 const Navbar = () => {
   const [visible,setVisible] = useState(false)
   const {user} = useSelector((e) => e.authReducer)
+  console.log(user)
   const navigate = useNavigate()
   const dispatch = useDispatch()
   useEffect(() => {

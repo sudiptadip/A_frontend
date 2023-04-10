@@ -15,12 +15,16 @@ import {
 import axios from "axios";
 
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { UPDATE } from "../../redux/authReducer/actionType";
 
 function ProfileForm({ user, setLoading }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [name, setName] = useState("");
   const [bio, setBio] = useState("");
   const [url, setUrl] = useState("");
+  const dispatch = useDispatch();
+
   useEffect(() => {
     if (user) {
       setName(user.name);
@@ -32,10 +36,16 @@ function ProfileForm({ user, setLoading }) {
   function updateUser() {
     setLoading(true);
     axios
-      .patch("https://filthy-calf-jumper.cyclic.app/users/"+ user._id,{name,bio,url})
+      .patch("https://filthy-calf-jumper.cyclic.app/users/" + user._id, {
+        name,
+        bio,
+        url,
+      })
       .then((response) => {
         setLoading(false);
         localStorage.setItem("user", JSON.stringify(response.data));
+        dispatch({ type: UPDATE, payload: response.data });
+        onClose();
       })
       .catch((e) => {
         setLoading(false);
@@ -67,7 +77,6 @@ function ProfileForm({ user, setLoading }) {
                 onChange={(e) => setUrl(e.target.value)}
                 type="text"
               />
-
               <FormLabel mt={"20px"}>Bio</FormLabel>
               <Input
                 value={bio}

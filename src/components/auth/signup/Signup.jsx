@@ -12,11 +12,11 @@ const Signup = () => {
   const toast = useToast()
   const navigate = useNavigate()
 
-  const {isLoading, isUser} = useSelector((e) => e.authReducer)
+  const {isLoading, user} = useSelector((e) => e.authReducer)
 
   const handelSubmit = () => {
     if(email && name){
-      dispatch(createAccount({email,name,bio}))
+      dispatch(createAccount({email : email,name: name,bio : bio},toast))
     }else{
       toast({
         position: 'top',
@@ -29,7 +29,7 @@ const Signup = () => {
   }
 
   useEffect(() => {
-    if(isUser){
+    if(user){
       toast({
         position: 'top',
         description: "Successfully account Created",
@@ -37,9 +37,10 @@ const Signup = () => {
         duration: 2000,
         isClosable: true,
       })
+      console.log(user)
       navigate('/')
     }
-  },[isUser,toast,navigate])
+  },[user,toast,navigate])
 
   if(isLoading){
     return <Flex mt={'50px'} justifyContent={'center'}>

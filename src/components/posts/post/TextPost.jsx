@@ -1,24 +1,60 @@
 import { Box, Flex, Text } from '@chakra-ui/react'
-import React from 'react'
-import {BiLike} from 'react-icons/bi'
+import React, { useEffect, useState } from 'react'
+import {AiTwotoneLike} from 'react-icons/ai'
+import { GetTextTemplate } from './GetTextTemplate'
+import { useDispatch, useSelector } from 'react-redux'
+import { likePost } from '../../../redux/appReducer/action'
+import PostEditDelete from './PostEditDelete'
 
-const TextPost = ({background = 'pink.200'}) => {
+const TextPost = ({title,content,name,avtarUrl,template,likes,_id,user_id,type}) => {
+    const [background,setBackground] = useState({tc: "", cc: "", url: "",})
+
+    const [like,setLike] = useState(false)
+    const {data} = useSelector((e) => e.appReducer)
+
+    const dispatch = useDispatch()
+    useEffect(() => {
+       let check = likes.filter((e) => e === user_id)
+       if(check.length !== 0){
+        setLike(true)
+       }else{
+        setLike(false)
+       }
+    },[likes,user_id,data])
+
+    useState(() => {
+      console.log(template)
+      GetTextTemplate(template, setBackground)
+    },[data])
+
+    function LikePosts(){
+        const user = JSON.parse(localStorage.getItem('user'))
+        if(user){
+          dispatch(likePost(_id))
+        }else{
+          alert("create your account")
+        }
+      }
+
   return (
-    <Box p={'30px'} backgroundImage="url('https://png.pngtree.com/thumb_back/fh260/background/20211112/pngtree-aesthetic-background-instagram-feed-post-image_915816.png')" backgroundSize="cover" boxShadow={'md'} w={'70%'} margin={'auto'} borderRadius={'10px'}>
-        <Text color={'#060047'} fontSize={'3xl'} fontWeight={'600'} >
-            The quick brown fox jump over the lazy dog
-        </Text>
-        <Text fontWeight={'500'} color={'#D14D72'} mt={'40px'} fontSize={'xl'}  >
-            The quick brown fox jump over the lazy dog The quick brown fox jump over the lazy dog The quick brown fox jump over the lazy dog The quick brown fox jump over the lazy dog
+    <Box p={'30px'} backgroundImage={`url(${background.url})`} backgroundSize="cover" boxShadow={'md'} w={'70%'} margin={'auto'} borderRadius={'10px'} mb={'50px'} >
+        <Flex justifyContent={'space-between'} >
+          <Text col or={background.tc} fontSize={'3xl'} fontWeight={'600'} >
+            {title}
+          </Text>
+          <PostEditDelete type={type} template={template} title={title} content={content} id={_id} />
+        </Flex>
+        <Text fontWeight={'500'} color={background.cc} mt={'40px'} fontSize={'xl'}  >
+            {content}
         </Text>
         <Box pl={{sm:'20px'}} pr={{sm:'20px'}} mt={'20px'} display={'flex'} justifyContent={'space-between'} alignItems={'center'} >
             <Flex alignItems={'center'} >
-            <Box w={'40px'} h={'40px'} borderRadius={'50%'} border={'1px solid black'} ></Box>
-            <Text marginLeft={'10px'} fontWeight={'500'} >Sudipta</Text>
+            <Box boxShadow={'md'} w={'40px'} h={'40px'} borderRadius={'50%'} backgroundImage={`url(${avtarUrl || "https://i.pinimg.com/originals/99/a8/3e/99a83e22b4c160d36e1697b4139c803f.jpg"})`} backgroundPosition="center" backgroundSize="cover"  ></Box>
+            <Text marginLeft={'10px'} fontWeight={'500'} >{name}</Text>
             </Flex>
-            <Box cursor={'pointer'} display={'flex'} gap={'10px'} alignItems={'center'} >
-                <BiLike size={'25px'}  />
-                <Text >0</Text>
+            <Box onClick={LikePosts} cursor={'pointer'} display={'flex'} gap={'10px'} alignItems={'center'} >
+            <AiTwotoneLike color={like ? "blue":"black"} size={'25px'} />
+                <Text >{likes.length}</Text>
             </Box>
         </Box>
     </Box>
