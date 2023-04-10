@@ -4,7 +4,7 @@ import { CREATE_ACCOUNT_FAILURE, CREATE_ACCOUNT_REQUEST, CREATE_ACCOUNT_SUCCESS,
 
 export const createAccount = (data,toast) => dispatch => {
     dispatch({ type:  CREATE_ACCOUNT_REQUEST})
-    axios.post("https://filthy-calf-jumper.cyclic.app/users",data)
+    axios.post("https://courageous-kerchief-pig.cyclic.app/users",data)
       .then((response) => {
           localStorage.setItem("user", JSON.stringify(response.data.result));
           dispatch({ type: CREATE_ACCOUNT_SUCCESS, payload: response.data.result})

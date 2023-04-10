@@ -85,7 +85,7 @@ const navigate = useNavigate();
           <Button onClick={() => {
                 setLoading(true);
                 axios
-                  .delete("https://filthy-calf-jumper.cyclic.app/users/"+ user._id,)
+                  .delete("https://courageous-kerchief-pig.cyclic.app/users/"+ user._id,)
                   .then((response) => {
                     setLoading(false);
                     dispatch({type: LOGOUT})

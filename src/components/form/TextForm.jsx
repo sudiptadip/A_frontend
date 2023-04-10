@@ -46,6 +46,9 @@ const TextForm = ({ type = "addpost", props }) => {
         template: background,
         likes: [],
       },toast))
+      onClose();
+      setTitle('')
+      setContent('')
       onClose()
     }else{
       alert('Fill out all input')
@@ -64,6 +67,8 @@ const TextForm = ({ type = "addpost", props }) => {
         )
       );
       onClose();
+      setTitle('')
+      setContent('')
     } else {
       alert("Fill out all input");
     }
@@ -72,7 +77,7 @@ const TextForm = ({ type = "addpost", props }) => {
   return (
     <>
       <Flex onClick={onOpen} gap={"10px"} alignItems={"center"}>
-        {type === "editPost" ? "Edit post" : <RxText /> + " What's on your mind"}
+        {type === "editPost" ? "Edit post" : <><RxText />What's on your mind</>}
       </Flex>
 
       <Modal isOpen={isOpen} onClose={onClose}>

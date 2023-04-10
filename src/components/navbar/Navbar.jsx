@@ -1,11 +1,12 @@
-import { Box, Button, Flex,  Input, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import {BiSearch} from "react-icons/bi"
 import PostType from "./PostType";
 import ResponsiveNav from "./ResponsiveNav";
 import { LOGOUT } from "../../redux/authReducer/actionType";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import {DiGoogleAnalytics} from 'react-icons/di'
+
 
 const Navbar = () => {
   const [visible,setVisible] = useState(false)
@@ -36,10 +37,7 @@ const Navbar = () => {
           <Text>B</Text>
         </Box>
         <Box display={'flex'} >
-          <Input ml={{base: '25px', md: '50px'}}  w={{base: '150px', sm: '200px', md: '250px'}} placeholder="search" />
-          <Flex p={'10px'} cursor={'pointer'} borderRightRadius={'8px'} bg={'#d8d8d8'} align={'center'}>
-              <BiSearch size={'20px'} />
-          </Flex>
+            <Button onClick={() => navigate('/admin')} ml={'20px'} > <DiGoogleAnalytics size={'25px'} /> Analytics</Button>
         </Box>
       </Box>
 {

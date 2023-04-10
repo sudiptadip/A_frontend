@@ -2,11 +2,12 @@ import { Box, Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, Draw
 import React, { useRef } from 'react'
 import PostType from "./PostType"
 import {AiOutlineMenu} from 'react-icons/ai'
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { LOGOUT } from "../../redux/authReducer/actionType"
 
 function ResponsiveNav() {
     const { isOpen, onOpen, onClose } = useDisclosure()
+    const {user} = useSelector((e)=>e.authReducer)
     const btnRef = useRef()
     const dispatch = useDispatch()
     return (
@@ -25,11 +26,13 @@ function ResponsiveNav() {
                <Box mt={'50px'} cursor={'pointer'}  gap={'10px'} fontSize={'xl'} fontWeight={'500'} >
                  <Box margin={'auto'} w={'80px'} h={'80px'} border={'1px solid black'} borderRadius={'50%'} ></Box>
                </Box>
-                 <Text textAlign={'center'} mt={'10px'} >Sudipta</Text>
+                 <Text textAlign={'center'} mt={'10px'} >{user.name}</Text>
             </DrawerHeader>
             <DrawerBody margin={'auto'} >
               <PostType />
+              <Box>
               <Button onClick={() => dispatch({type: LOGOUT})} >Logout</Button>
+              </Box>
             </DrawerBody>
             <DrawerFooter>
               <Button variant='outline' mr={3} onClick={onClose}>

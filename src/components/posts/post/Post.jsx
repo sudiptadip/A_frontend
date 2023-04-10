@@ -33,8 +33,8 @@ const Post = ({imgUrl,title,content,likes,name,avtarUrl,_id,user_id,type}) => {
        <Box borderRadius={'20px'} backgroundImage={`url(${imgUrl})`} backgroundPosition="center" margin={'auto'} backgroundSize="cover" w={{sm:'40%'}} h={'260px'}></Box>
        <Box margin={'auto'} >
           <Box display={'flex'} mt={'20px'} gap={'20px'} >
-            <Box h={'90px'} fontSize={'2xl'} fontWeight={'500'} textAlign={'center'} display={'flex'} justifyContent={'space-evenly'} color={'#2000ad'} alignItems={'center'} borderRadius={'13px'} w={'70px'} bg={'#33e0ec'} >
-                May 08
+            <Box h={'90px'} fontSize={'xl'} fontWeight={'500'} textAlign={'center'} display={'flex'} justifyContent={'space-evenly'} color={'#2000ad'} alignItems={'center'} borderRadius={'13px'} w={'70px'} bg={'#33e0ec'} >
+                April 2023
             </Box>
             <Box w={'200px'} fontSize={'xl'} fontWeight={500} lineHeight={'1.2'} h={'50px'} >
                 {title}

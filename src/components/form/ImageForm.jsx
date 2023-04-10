@@ -48,6 +48,9 @@ const ImageForm = ({ type = "addpost", props }) => {
         )
       );
       onClose();
+      setTitle('')
+      setContent('')
+      setUrl('')
     } else {
       alert("Fill out all input");
     }

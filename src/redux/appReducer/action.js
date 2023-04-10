@@ -5,7 +5,7 @@ import { ADD_POST, APPUPDATE, DELETEPOST, GET_FAILURE, GET_REQUEST, GET_SUCCESS,
 export const getPosts = () => (dispatch) => {
   dispatch({ type: GET_REQUEST });
   return axios
-    .get(`https://filthy-calf-jumper.cyclic.app/posts`)
+    .get(`https://courageous-kerchief-pig.cyclic.app/posts`)
     .then((res) => {
       dispatch({ type: GET_SUCCESS, payload: res.data.data });
     })
@@ -17,7 +17,7 @@ export const getPosts = () => (dispatch) => {
 export const addPost = (data,toast) => (dispatch) => {
   dispatch({ type: GET_REQUEST });
   return axios
-    .post(`https://filthy-calf-jumper.cyclic.app/posts`,data)
+    .post(`https://courageous-kerchief-pig.cyclic.app/posts`,data)
     .then((res) => {
       dispatch({ type: ADD_POST, payload: res.data });
       toast({
@@ -43,7 +43,7 @@ export const addPost = (data,toast) => (dispatch) => {
 export const likePost = (id) => (dispatch) => {
   console.log('hi')
   return axios
-    .patch(`https://filthy-calf-jumper.cyclic.app/posts/${id}/like`)
+    .patch(`https://courageous-kerchief-pig.cyclic.app/posts/${id}/like`)
     .then((res) => {
       dispatch({ type: APPUPDATE, payload: res.data });
       console.log(res.data)
@@ -56,7 +56,7 @@ export const likePost = (id) => (dispatch) => {
 
 
  export const postUpdate = (data,id) => dispatch => {
-    axios.patch("https://filthy-calf-jumper.cyclic.app/posts/"+id,data)
+    axios.patch("https://courageous-kerchief-pig.cyclic.app/posts/"+id,data)
       .then((response) => {
         dispatch({ type: APPUPDATE, payload: response.data})
       }).catch((e) => {
@@ -65,7 +65,7 @@ export const likePost = (id) => (dispatch) => {
   }
 
   export const deletePost = (id) => dispatch => {
-    axios.delete("https://filthy-calf-jumper.cyclic.app/posts/"+id)
+    axios.delete("https://courageous-kerchief-pig.cyclic.app/posts/"+id)
       .then((response) => {
         dispatch({ type: DELETEPOST, payload: id})
         console.log(response)

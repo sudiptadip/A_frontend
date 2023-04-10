@@ -1,4 +1,4 @@
-import { Box, Button, CircularProgress, Flex, FormControl, FormLabel, Input, Spinner, Text, useToast } from "@chakra-ui/react";
+import {  Button,  Flex, FormControl, FormLabel, Input, Spinner, Text, useToast } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,7 +15,10 @@ const Signup = () => {
   const {isLoading, user} = useSelector((e) => e.authReducer)
 
   const handelSubmit = () => {
-    if(email && name){
+    if(email.indexOf(".") === -1 || email.slice(email.indexOf(".")) !== ".com"){
+      alert('enter valid email')
+    }
+    else if(email && name){
       dispatch(createAccount({email : email,name: name,bio : bio},toast))
     }else{
       toast({
@@ -61,7 +64,6 @@ const Signup = () => {
         <Input onChange={(e) => setBio(e.target.value)} type="text" placeholder="bio" />
 
         <Button onClick={handelSubmit} mt={'20px'} w={'100%'} colorScheme='twitter' >Submit</Button>
-        <Link style={{backgroundColor: 'white'}} to={'/signin'} >Already have an acount</Link>
       </FormControl>
     </>
   );

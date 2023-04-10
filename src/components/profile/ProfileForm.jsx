@@ -36,7 +36,7 @@ function ProfileForm({ user, setLoading }) {
   function updateUser() {
     setLoading(true);
     axios
-      .patch("https://filthy-calf-jumper.cyclic.app/users/" + user._id, {
+      .patch("https://courageous-kerchief-pig.cyclic.app/users/" + user._id, {
         name,
         bio,
         url,
